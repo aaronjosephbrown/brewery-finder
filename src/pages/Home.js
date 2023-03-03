@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { BreweryContext } from '../context/BreweryContext'
 import { Breweries } from '../components/Breweries'
-import Loader from '../components/Loader'
+import { Loader } from '../components/Loader'
 
 const Home = () => {
   const { loading } = useContext(BreweryContext)
