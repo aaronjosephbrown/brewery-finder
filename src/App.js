@@ -10,13 +10,13 @@ function App() {
   return (
     <BreweryContextProvider>
       <Router>
-        <Navbar />
+        <Navbar/>
         <Routes> 
           <Route path="/" element={<Home />}/>
           <Route path="BreweryInfo/:id" element={<BreweryInfo />}/>
           <Route path="about" element={<About />}/>
         </Routes>
-        <Footer />
+        <Footer/>
       </Router>
     </BreweryContextProvider>
   )
