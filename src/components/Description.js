@@ -41,8 +41,24 @@ export default function Description() {
               )}
             </dd>
           </div>
+          <div className='sm:col-span-1'>
+            <dt className='text-sm font-medium'>Phone</dt>
+            <dd className='mt-1 text-sm'>
+              {brewery.phone ? formatPhoneNumber(brewery.phone) : 'No phone number available'}
+            </dd>
+          </div>
         </dl>
       </div>
     </div>
   )
+}
+
+
+function formatPhoneNumber(phoneNumberString) {
+  var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
+  var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+  if (match) {
+    return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+  }
+  return null;
 }
