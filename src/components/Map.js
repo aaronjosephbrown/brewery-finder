@@ -1,4 +1,4 @@
-import { API_KEY } from '../API_KEY'
+import { API_KEY } from '../API_K'
 import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api'
 import { useContext } from 'react'
 import { BreweryContext } from '../context/BreweryContext'
