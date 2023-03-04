@@ -10,12 +10,9 @@ function Map() {
   const lat = brewery.latitude ? parseFloat(brewery.latitude) : 0
   const lng = brewery.longitude ? parseFloat(brewery.longitude) : 0
 
-  console.log(process.env.REACT_APP_MAP_API)
-
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_MAP_API,
   })
-  
 
   if (!isLoaded) return <Loader />
   if (lat === 0 && lng === 0) {
@@ -44,4 +41,4 @@ function Map() {
 
 export default Map
 
-// AIzaSyCcXPMOEWbUyPN6m9wzmNQbS4n0RN8Af5Y
+

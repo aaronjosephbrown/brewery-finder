@@ -14,7 +14,6 @@ const BreweryInfo = () => {
       .get(`https://api.openbrewerydb.org/breweries/${params.id}`)
       .then((res) => {
         setBrewery(res.data)
-        console.log(res.data)
       })
       .catch((err) => {
         console.log(err)
