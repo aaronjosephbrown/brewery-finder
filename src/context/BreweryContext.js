@@ -25,11 +25,15 @@ const BreweryContextProvider = ({children}) => {
 
   useEffect(() => {
     setLoading(true)
+    getRandomBreweries()
+  }, [])
+
+const getRandomBreweries = () => {
+    setLoading(true)
     axios
       .get(`https://api.openbrewerydb.org/breweries/random?size=21`)
       .then((res) => {
         if (res.status === 400 || res.status === 404 || res.data.length === 0) {
-          console.log('There was an issue with your search')
           setSearchValue('')
         }
         setBreweries(res.data)
@@ -38,9 +42,7 @@ const BreweryContextProvider = ({children}) => {
       .catch((err) => {
         console.log(err)
       })
-  }, [])
-
-
+}  
 
   const handleChange = (e) => {
     setSearchValue(e.target.value)
@@ -72,7 +74,7 @@ const BreweryContextProvider = ({children}) => {
   }
 
   return (
-    <BreweryContext.Provider value={{ handleChange, handleSubmit, breweries, loading, setBrewery, brewery }}>
+    <BreweryContext.Provider value={{ handleChange, handleSubmit, breweries, loading, setBrewery, brewery, getRandomBreweries }}>
       {children}
     </BreweryContext.Provider>
   )
