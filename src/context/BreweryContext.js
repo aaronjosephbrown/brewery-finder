@@ -1,21 +1,17 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react'
 //import BreweryReducer from './BreweryReducer';
-import axios from 'axios';
+import axios from 'axios'
 
+export const BreweryContext = createContext()
 
-export const BreweryContext = createContext();
-
-
-
-const BreweryContextProvider = ({children}) => {
+const BreweryContextProvider = ({ children }) => {
   const [query, setQuery] = useState('')
   const [searchValue, setSearchValue] = useState('')
   const [breweries, setBreweries] = useState([])
   const [brewery, setBrewery] = useState({})
   const [loading, setLoading] = useState(false)
 
-
-//Need to finish implementing useReducer
+  //Need to finish implementing useReducer
   // const [state, dispatch] = useReducer(BreweryReducer, {
   //   breweries: [],
   //   brewery: {},
@@ -23,12 +19,7 @@ const BreweryContextProvider = ({children}) => {
   //   loading: false,
   // });
 
-  useEffect(() => {
-    setLoading(true)
-    getRandomBreweries()
-  }, [])
-
-const getRandomBreweries = () => {
+  const getRandomBreweries = () => {
     setLoading(true)
     axios
       .get(`https://api.openbrewerydb.org/breweries/random?size=21`)
@@ -42,7 +33,12 @@ const getRandomBreweries = () => {
       .catch((err) => {
         console.log(err)
       })
-}  
+  }
+
+  useEffect(() => {
+    setLoading(true)
+    getRandomBreweries()
+  }, [])
 
   const handleChange = (e) => {
     setSearchValue(e.target.value)
@@ -53,7 +49,7 @@ const getRandomBreweries = () => {
     e.preventDefault()
     setLoading(true)
     if (searchValue.length === 0) {
-      console.log('Please enter a search term')
+      alert('Enter a search term to find breweries!')
       setLoading(false)
       return
     }
@@ -61,7 +57,10 @@ const getRandomBreweries = () => {
       .get(`https://api.openbrewerydb.org/breweries/search?query=${query}`)
       .then((res) => {
         if (res.status === 400 || res.status === 404 || res.data.length === 0) {
-          console.log('There was an issue with your search')
+          alert(
+            "Oops, it seems we've come up empty-handed in our quest for breweries with that search term!"
+          )
+          getRandomBreweries()
           setSearchValue('')
         }
         setBreweries(res.data)
@@ -74,7 +73,17 @@ const getRandomBreweries = () => {
   }
 
   return (
-    <BreweryContext.Provider value={{ handleChange, handleSubmit, breweries, loading, setBrewery, brewery, getRandomBreweries }}>
+    <BreweryContext.Provider
+      value={{
+        handleChange,
+        handleSubmit,
+        breweries,
+        loading,
+        setBrewery,
+        brewery,
+        getRandomBreweries,
+      }}
+    >
       {children}
     </BreweryContext.Provider>
   )

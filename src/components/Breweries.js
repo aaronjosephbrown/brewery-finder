@@ -6,22 +6,6 @@ import { Link } from 'react-router-dom'
 export const Breweries = () => {
   const { breweries, getRandomBreweries } = useContext(BreweryContext)
 
-  if (breweries.length === 0) {
-    setTimeout(() => {
-      getRandomBreweries()
-    }, 5000)
-    return (
-      <div className='container mx-auto sm:px-6 lg:px-8 min-h-screen flex flex-col justify-center'>
-        <div className='flex justify-center items-center h-full'>
-          <h1 className='text-2xl font-bold text-center'>
-            Oops, it seems we've come up empty-handed in our quest for breweries
-            with that search term!
-          </h1>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className='container mx-auto sm:px-6 lg:px-8 min-h-screen'>
       <SearchField />
