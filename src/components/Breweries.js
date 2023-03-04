@@ -1,14 +1,33 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { BreweryContext } from '../context/BreweryContext'
 import { SearchField } from '../components/SearchField'
 import { Link } from 'react-router-dom'
 
 export const Breweries = () => {
   const { breweries, getRandomBreweries } = useContext(BreweryContext)
+  const [message, setMessage] = useState(null)
+
+  useEffect(() => {
+    if (breweries.length === 0) {
+      setMessage(
+        <div className='flex justify-center items-center'>
+          <h1 className='text-2xl font-bold text-center'>
+            Oops, it seems we've come up empty-handed in our quest for breweries
+            with that search term!
+          </h1>
+        </div>
+      )
+      setTimeout(() => {
+        setMessage(null)
+        getRandomBreweries()
+      }, 5000)
+    }
+  }, [breweries])
 
   return (
     <div className='container mx-auto sm:px-6 lg:px-8 min-h-screen'>
       <SearchField />
+      <div>{message}</div>
       <ul className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
         {breweries.map((brewery) => (
           <li key={brewery.id} className='col-span-1 divide-y rounded-lg'>

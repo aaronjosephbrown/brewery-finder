@@ -2,23 +2,15 @@ import { useParams } from 'react-router-dom'
 import { useContext, useEffect } from 'react'
 import { BreweryContext } from '../context/BreweryContext'
 import Description from '../components/Description'
-import axios from 'axios'
 import Map from '../components/Map'
 
 const BreweryInfo = () => {
-  const { setBrewery } = useContext(BreweryContext)
   const params = useParams()
+  const { getBrewery } = useContext(BreweryContext)
 
   useEffect(() => {
-    axios
-      .get(`https://api.openbrewerydb.org/breweries/${params.id}`)
-      .then((res) => {
-        setBrewery(res.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }, [params.id, setBrewery])
+    getBrewery(params.id)
+  }, [params.id])
 
   return (
     <div className='mx-auto sm:px-6 lg:px-8 min-h-screen'>

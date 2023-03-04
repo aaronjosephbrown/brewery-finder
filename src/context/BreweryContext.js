@@ -1,75 +1,80 @@
-import { createContext, useState, useEffect } from 'react'
-//import BreweryReducer from './BreweryReducer';
+import { createContext, useEffect, useReducer } from 'react'
+import BreweryReducer from './BreweryReducer'
 import axios from 'axios'
 
 export const BreweryContext = createContext()
 
 const BreweryContextProvider = ({ children }) => {
-  const [query, setQuery] = useState('')
-  const [searchValue, setSearchValue] = useState('')
-  const [breweries, setBreweries] = useState([])
-  const [brewery, setBrewery] = useState({})
-  const [loading, setLoading] = useState(false)
+  const [state, dispatch] = useReducer(BreweryReducer, {
+    query: '',
+    searchValue: '',
+    breweries: [],
+    brewery: {},
+    heading: 'Breweries',
+    loading: true,
+  })
 
-  //Need to finish implementing useReducer
-  // const [state, dispatch] = useReducer(BreweryReducer, {
-  //   breweries: [],
-  //   brewery: {},
-  //   heading: 'Breweries',
-  //   loading: false,
-  // });
+  useEffect(() => {
+    getRandomBreweries()
+  }, [])
 
   const getRandomBreweries = () => {
-    setLoading(true)
     axios
       .get(`https://api.openbrewerydb.org/breweries/random?size=21`)
       .then((res) => {
-        if (res.status === 400 || res.status === 404 || res.data.length === 0) {
-          setSearchValue('')
-        }
-        setBreweries(res.data)
-        setLoading(false)
+        dispatch({
+          type: 'GET_RANDOM_BREWERIES',
+          payload: res.data,
+        })
       })
       .catch((err) => {
         console.log(err)
       })
   }
 
-  useEffect(() => {
-    setLoading(true)
-    getRandomBreweries()
-  }, [])
-
   const handleChange = (e) => {
-    setSearchValue(e.target.value)
-    setQuery(searchValue)
+    dispatch({
+      type: 'SET_SEARCH_VALUE',
+      payload: e.target.value,
+    })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setLoading(true)
-    if (searchValue.length === 0) {
-      alert('Enter a search term to find breweries!')
-      setLoading(false)
-      return
-    }
+    console.log(state.query)
+    dispatch({
+      type: 'SET_QUERY',
+      payload: state.searchValue,
+    })
+    searchBreweries(state.searchValue)
+  }
+
+  const searchBreweries = (query) => {
     axios
       .get(`https://api.openbrewerydb.org/breweries/search?query=${query}`)
       .then((res) => {
-        if (res.status === 400 || res.status === 404 || res.data.length === 0) {
-          alert(
-            "Oops, it seems we've come up empty-handed in our quest for breweries with that search term!"
-          )
-          getRandomBreweries()
-          setSearchValue('')
-        }
-        setBreweries(res.data)
-        setLoading(false)
+        dispatch({
+          type: 'GET_BREWERIES',
+          payload: res.data,
+        })
       })
       .catch((err) => {
         console.log(err)
       })
-    setSearchValue('')
+  }
+
+  const getBrewery = (id) => {
+    axios
+      .get(`https://api.openbrewerydb.org/breweries/${id}`)
+      .then((res) => {
+        dispatch({
+          type: 'GET_BREWERY',
+          payload: res.data,
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   return (
@@ -77,10 +82,10 @@ const BreweryContextProvider = ({ children }) => {
       value={{
         handleChange,
         handleSubmit,
-        breweries,
-        loading,
-        setBrewery,
-        brewery,
+        breweries: state.breweries,
+        loading: state.loading,
+        brewery: state.brewery,
+        getBrewery,
         getRandomBreweries,
       }}
     >

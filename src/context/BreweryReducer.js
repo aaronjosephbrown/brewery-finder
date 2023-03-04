@@ -1,25 +1,36 @@
 const BreweryReducer = (state, action) => {
   switch (action.type) {
-    case 'SEARCH_BREWERIES':
+    case 'GET_RANDOM_BREWERIES':
       return {
         ...state,
         breweries: action.payload,
-        heading: 'Search Results',
-      };
+        loading: false,
+      }
     case 'GET_BREWERY':
       return {
         ...state,
         brewery: action.payload,
-        heading: 'Brewery Details',
-      };
-    case 'SET_LOADING':
+        loading: false
+      }
+    case 'SET_SEARCH_VALUE':
       return {
         ...state,
-        loading: true,
-      };
+        searchValue: action.payload,
+      }
+    case 'SET_QUERY':
+      return {
+        ...state,
+        query: action.payload,
+      }
+    case 'GET_BREWERIES':
+      return {
+        ...state,
+        breweries: action.payload,
+        loading: false,
+      }
     default:
-      return state;
+      return state
   }
 }
 
-export default BreweryReducer;
+export default BreweryReducer
