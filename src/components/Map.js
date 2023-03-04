@@ -1,3 +1,4 @@
+import { API_KEY } from '../API_KEY'
 import { GoogleMap, useLoadScript, MarkerF } from '@react-google-maps/api'
 import { useContext } from 'react'
 import { BreweryContext } from '../context/BreweryContext'
@@ -11,7 +12,7 @@ function Map() {
   const lng = brewery.longitude ? parseFloat(brewery.longitude) : 0
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyCcXPMOEWbUyPN6m9wzmNQbS4n0RN8Af5Y',
+    googleMapsApiKey: API_KEY,
   })
 
   if (!isLoaded) return <Loader />
