@@ -1,6 +1,7 @@
 import { createContext, useEffect, useReducer } from 'react'
 import BreweryReducer from './BreweryReducer'
 import axios from 'axios'
+import  handleListEngines from "../context/openai";
 
 export const BreweryContext = createContext()
 
@@ -39,13 +40,15 @@ const BreweryContextProvider = ({ children }) => {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    const response = await handleListEngines(state.searchValue);
     dispatch({
       type: 'SET_QUERY',
-      payload: state.searchValue,
+      payload: response.choices[0].text,
     })
-    searchBreweries(state.searchValue)
+    console.log(response)
+    searchBreweries(response.choices[0].text)
   }
 
   const searchBreweries = (query) => {

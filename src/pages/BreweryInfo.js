@@ -10,7 +10,7 @@ const BreweryInfo = () => {
 
   useEffect(() => {
     getBrewery(params.id)
-  }, [params.id])
+  }, [params.id, getBrewery])
 
   return (
     <div className='mx-auto sm:px-6 lg:px-8 min-h-screen'>

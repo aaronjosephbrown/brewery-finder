@@ -22,7 +22,7 @@ export const Breweries = () => {
         getRandomBreweries()
       }, 5000)
     }
-  }, [breweries])
+  }, [breweries, getRandomBreweries])
 
   return (
     <div className='container mx-auto sm:px-6 lg:px-8 min-h-screen'>
