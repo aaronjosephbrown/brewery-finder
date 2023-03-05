@@ -47,7 +47,6 @@ const BreweryContextProvider = ({ children }) => {
       type: 'SET_QUERY',
       payload: response.choices[0].text,
     })
-    console.log(response)
     searchBreweries(response.choices[0].text)
   }
 
