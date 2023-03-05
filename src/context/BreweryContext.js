@@ -41,7 +41,6 @@ const BreweryContextProvider = ({ children }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(state.query)
     dispatch({
       type: 'SET_QUERY',
       payload: state.searchValue,
