@@ -19,7 +19,3 @@ const handleListEngines = async (text) => {
 };
 
 export default handleListEngines;
-
-
-
-// apiKey: "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"

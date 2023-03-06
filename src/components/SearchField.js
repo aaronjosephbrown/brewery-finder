@@ -23,18 +23,10 @@ const SearchField = () => {
               Go
             </button>
           </div>
-          <span className='text-sm text-gray-400 mt-1'>
-            Search breweries powered by&nbsp;
-            <a
-              href='https://openai.com'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='underline'
-            >
-              OpenAI
-            </a>
-          </span>
         </div>
+        <p className='text-sm text-center '>
+          Ask us where to find them and embark on a taste adventure. From hidden gems to top-rated spots, we'll guide you to the best beer in town. Get ready to sip, savor, and enjoy Miami's thriving craft beer scene!
+          </p>
       </form>
     </div>
   );

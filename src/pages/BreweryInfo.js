@@ -13,12 +13,16 @@ const BreweryInfo = () => {
   }, [params.id, getBrewery])
 
   return (
-    <div className='mx-auto sm:px-6 lg:px-8 min-h-screen'>
-      <div className='flex flex-row'>
-        <div className='basis-3/4 mr-6'>
-        <Description />
+    <div className='mx-auto sm:px-6 md:px-8 lg:px-8 min-h-screen'>
+      <div className='flex flex-col md:flex-row'>
+        <div className='w-full md:basis-1/2 lg:basis-1/2 md:mr-6'>
+          <div className='w-full mb-6 md:mb-0'>
+            <Description />
+          </div>
         </div>
-        <Map className='basis-1/4' />
+        <div className='w-full md:basis-1/2 lg:basis-1/2'>
+          <Map />
+        </div>
       </div>
     </div>
   )
