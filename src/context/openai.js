@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const handleListEngines = async (text) => {
   const response = await axios.post('https://api.openai.com/v1/engines/text-davinci-003/completions', {
-    prompt: `Extract the city from the text:\n\nText: I want to have a beer in Minneapolis "${text}"\nCity: Minneapolis \nText: I want to have a beer in"${text}"\nCity: `,
+    prompt: `Extract the city from the text:\n\nText: I want to have a beer in Minneapolis "${text}"\nCity: Minneapolis \n \nText: I am head toward Tampa, FL "${text}"\nCity: Tampa \nText: I want to have a beer in"${text}"\nCity: `,
     temperature: 0,
     max_tokens: 60,
     top_p: 1.0,
