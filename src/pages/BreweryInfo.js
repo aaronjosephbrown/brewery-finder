@@ -12,6 +12,10 @@ const BreweryInfo = () => {
     getBrewery(params.id)
   }, [params.id, getBrewery])
 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
     <div className='mx-auto sm:px-6 md:px-8 lg:px-8 min-h-screen'>
       <div className='flex flex-col md:flex-row'>
@@ -29,3 +33,4 @@ const BreweryInfo = () => {
 }
 
 export default BreweryInfo
+
