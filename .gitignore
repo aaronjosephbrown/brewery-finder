@@ -16,6 +16,8 @@
 .env.development.local
 .env.test.local
 .env.production.local
+trainingdata.json
+trainingdata_prepared.jsonl
 
 npm-debug.log*
 yarn-debug.log*
