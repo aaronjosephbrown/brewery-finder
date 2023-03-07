@@ -1,69 +1,66 @@
-import { Link } from "react-router-dom"
-import { Disclosure } from '@headlessui/react'
-import { MenuIcon, XIcon } from '@heroicons/react/outline'
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+import { Link } from "react-router-dom";
+import { Disclosure } from '@headlessui/react';
+import { MenuIcon, XIcon } from '@heroicons/react/outline';
 
 function Navbar() {
   return (
-    <Disclosure as="nav" className='navbar mb-2 shadow-lg bg-neutral text-neutral-content '>
+    <Disclosure as="nav" className="bg-secondary mb-4">
       {({ open }) => (
         <>
-          <div className='flex-none px-2 mx-2'>
-            <Link to='/'>
-              <span className='text-lg font-bold'>Brewery Finder</span>
-            </Link>
-          </div>
-          <div className='flex-1 px-2 mx-2 lg:flex-none'></div>
-          <div className='hidden lg:block lg:ml-auto'>
-            <div className='flex items-center'>
-              <Link to='/' className='btn btn-ghost btn-sm rounded-btn mx-2' href='/'>
-                Home
-              </Link>
-              <a className='btn btn-ghost btn-sm rounded-btn mx-2' href='/about'>
-                About
-              </a>
+          <div className="container mx-auto px-6 py-4">
+            <div className="flex justify-between items-center">
+              <div className="text-2xl font-bold">
+                <Link to="/">Brewery Finder</Link>
+              </div>
+              <div className="flex sm:hidden">
+                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md  hover:text-neutral-200 hover:bg-neutral-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <span className="sr-only">Open main menu</span>
+                  {open ? (
+                    <XIcon className="block h-6 w-6" aria-hidden="true" />
+                  ) : (
+                    <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+                  )}
+                </Disclosure.Button>
+              </div>
+              <div className="hidden sm:flex sm:items-center">
+                <Link
+                  to="/"
+                  className="mx-3 py-2 rounded-md text-sm font-medium  hover:text-neutral-200 "
+                >
+                  Home
+                </Link>
+                <Link
+                  to="/about"
+                  className="mx-3 py-2 rounded-md text-sm font-medium  hover:text-neutral-200 "
+                >
+                  About
+                </Link>
+              </div>
             </div>
           </div>
-          <div className='flex-none'>
-            <div className='lg:hidden'>
-              <Disclosure.Button className='btn btn-square btn-ghost'>
-                {open ? (
-                  <XIcon className='inline-block w-5 h-5 stroke-current' />
-                ) : (
-                  <MenuIcon className='inline-block w-5 h-5 stroke-current' />
-                )}
-              </Disclosure.Button>
-            </div>
-          </div>
-          <Disclosure.Panel className='lg:hidden'>
-            <div className='px-2 pt-2 pb-3 space-y-1'>
+
+          <Disclosure.Panel className="sm:hidden bg-secondary">
+            <div className="px-2 pt-2 pb-3 space-y-1">
               <Link
-                to='/'
-                className={classNames(
-                  'block px-3 py-2 rounded-md text-base font-medium',
-                  open ? 'bg-neutral-800 text-white' : 'text-neutral-200 hover:text-white hover:bg-neutral-700',
-                )}
+                to="/"
+                className="block px-3 py-2 rounded-md text-base font-medium hover:text-neutral-200 hover:bg-neutral-900"
+                onClick={() => open && open(false)}
               >
                 Home
               </Link>
-              <a
-                href='/about'
-                className={classNames(
-                  'block px-3 py-2 rounded-md text-base font-medium',
-                  open ? 'bg-neutral-800 text-white' : 'text-neutral-200 hover:text-white hover:bg-neutral-700',
-                )}
+              <Link
+                to="/about"
+                className="block px-3 py-2 rounded-md text-base font-medium  hover:text-neutral-200 hover:bg-neutral-900"
+                onClick={() => open && open(false)}
               >
                 About
-              </a>
+              </Link>
             </div>
           </Disclosure.Panel>
         </>
       )}
     </Disclosure>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;
