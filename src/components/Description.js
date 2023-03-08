@@ -9,6 +9,19 @@ export default function Description() {
     return <LoaderListView />
   }
 
+  const handleGetDirectionsClick = () => {
+    const { latitude, longitude } = brewery
+    const isAppleDevice = navigator.userAgent.indexOf('Mac') !== -1 && navigator.userAgent.indexOf('Mobile') !== -1
+
+    if (latitude && longitude) {
+      if (isAppleDevice) {
+        window.open(`https://maps.apple.com/?daddr=${latitude},${longitude}`)
+      } else {
+        window.open(`https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`)
+      }
+    }
+  }
+
   return (
     <div className='overflow-hidden bg-accent shadow sm:rounded-lg'>
       <div className='px-4 py-5 sm:px-6'>
@@ -47,12 +60,16 @@ export default function Description() {
               {brewery.phone ? formatPhoneNumber(brewery.phone) : 'No phone number available'}
             </dd>
           </div>
+          <div className='sm:col-span-2'>
+            <button className='btn' onClick={handleGetDirectionsClick}>
+              Get Directions
+            </button>
+          </div>
         </dl>
       </div>
     </div>
   )
 }
-
 
 function formatPhoneNumber(phoneNumberString) {
   var cleaned = ('' + phoneNumberString).replace(/\D/g, '');

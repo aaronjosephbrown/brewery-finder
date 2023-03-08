@@ -25,7 +25,7 @@ const SearchField = () => {
           </div>
         </div>
         <p className='text-sm text-center '>
-          Ask us where to find a beer in a city and embark on a taste adventure. From hidden gems to top-rated spots, we'll guide you to the best beer in town. Get ready to sip, savor, and enjoy Miami's thriving craft beer scene!
+          Ask us where to find a beer in your destination city.
           </p>
       </form>
     </div>
