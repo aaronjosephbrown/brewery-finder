@@ -2,10 +2,13 @@ import { useContext, useEffect, useState } from 'react'
 import { BreweryContext } from '../context/BreweryContext'
 import { SearchField } from '../components/SearchField'
 import { Link } from 'react-router-dom'
+import _ from 'lodash'
 
+const PAGE_SIZE = 15
 export const Breweries = () => {
   const { breweries, getRandomBreweries } = useContext(BreweryContext)
   const [message, setMessage] = useState(null)
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     if (breweries.length === 0) {
@@ -24,12 +27,23 @@ export const Breweries = () => {
     }
   }, [breweries, getRandomBreweries])
 
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber)
+  }
+
+  const startIndex = (currentPage - 1) * PAGE_SIZE
+  const endIndex = startIndex + PAGE_SIZE
+  const currentBreweries = breweries.slice(startIndex, endIndex)
+
+
+
   return (
     <div className='container mx-auto sm:px-6 lg:px-8 min-h-screen'>
       <SearchField />
       <div>{message}</div>
       <ul className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3'>
-        {breweries.map((brewery) => (
+        {currentBreweries.map((brewery) => (
           <li key={brewery.id} className='col-span-1 divide-y rounded-lg'>
             <div className='flex flex-wrap w-full items-center justify-between space-x-6 p-6'>
               <div className='flex-1'>
@@ -56,6 +70,48 @@ export const Breweries = () => {
           </li>
         ))}
       </ul>
+      <div className='mt-4'>
+        <Pagination
+          itemsCount={breweries.length}
+          pageSize={PAGE_SIZE}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </div>
   )
+}
+
+const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
+  const pageCount = Math.ceil(itemsCount / pageSize)
+
+  if (pageCount === 1) return null
+
+  const pages = _.range(1, pageCount + 1)
+
+  return (
+    <nav aria-label='Page navigation'>
+      <ul className='pagination flex flex-col md:flex-row items-center justify-center daisy'>
+        {pages.map((page) => (
+          <li
+            key={page}
+            className={`page-item btn ${
+              page === currentPage ? 'btn-accent active' : 'btn-outline-primary'
+            }`}
+          >
+            <button className='page-link' onClick={() => onPageChange(page)}>
+              {page}
+            </button>
+          </li>
+        ))}
+      </ul>
+      <style>{`
+        @media (max-width: 768px) {
+          .pagination {
+            display: none;
+          }
+        }
+      `}</style>
+    </nav>
+  );
 }
